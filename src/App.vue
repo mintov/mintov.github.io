@@ -1,13 +1,7 @@
-<script setup lang="ts">
-  import Nav from "./components/Nav.vue";
-  import Editor from "./components/Editor.vue";
-</script>
+<script setup lang="ts"></script>
 
 <template>
-
-    <Nav></Nav>
-    <Editor></Editor>
-
+  <RouterView></RouterView>
 </template>
 
 <style scoped>
