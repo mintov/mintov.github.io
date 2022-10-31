@@ -1,13 +1,276 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<style>
+
+</style>
+
+<head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>editor</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+    <title>视图参照平台-Minto.ViewHouse</title>
+    <link href="./assets/css/mve.css" rel="stylesheet">
+    <script type="text/javascript" src="./assets/js/mve.js"></script>
+    <script>
+
+    </script>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .mve-container {
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 48px 0;
+            margin: 0 auto;
+        }
+
+        .mve-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 24px;
+        }
+
+        .mve-header h1 {
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .mve-header span {
+            display: inline-block;
+            height: 24px;
+            width: 2px;
+            background: #efefef;
+            margin: 0 16px;
+        }
+
+        .mve-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .mve-wrapper-cell {
+            width: calc(50% - 24px);
+            min-height: 300px;
+            border-radius: 12px;
+        }
+
+        .mve-wrapper-cell-blue {
+            background: #2c60f6;
+        }
+
+        .mve-wrapper-cell-gray {
+            background: #282e3a;
+        }
+
+        .mve-card-header {
+            display: flex;
+            align-items: center;
+            padding: 40px 40px 0;
+        }
+
+        .mve-card-header-left {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .mve-card-title {
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 32px;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .mve-card-desc {
+            font-size: 14px;
+            line-height: 22px;
+            color: #fff;
+            opacity: .9;
+        }
+
+        .mve-card-body {
+            padding: 51px 40px 40px;
+            color: #fff;
+        }
+
+        .mve-card-footer {
+            padding: 19px 40px;
+        }
+
+        .mve-card-footer:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background: hsla(0, 0%, 100%, .15);
+            top: -1px;
+            left: 0;
+        }
+    </style>
+    <style>
+        .mve-content {
+            padding-top: 48px;
+        }
+
+        .mve-content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 28px;
+        }
+
+        .mve-content-header-left {
+            margin-right: 48px;
+        }
+
+        .mve-content-header-name {
+            display: inline-block;
+            font-size: 14px;
+            line-height: 20px;
+            padding: 2px 8px;
+            color: var(--color-text-2);
+            background: var(--color-fill-2);
+            border-radius: 2px;
+        }
+
+        .mve-content-header-title {
+            font-weight: 500;
+            font-size: 36px;
+            line-height: 44px;
+            color: var(--color-text-1);
+            margin-top: 8px;
+        }
+
+        .mve-content-body {
+            padding: 48px;
+            display: flex;
+            transition: opacity .3s;
+            /* background: linear-gradient(90deg, transparent 0, transparent 50%, var(--color-fill-1) 0, var(--color-fill-1)); */
+
+            background: linear-gradient(90deg, transparent 0, transparent 10%, var(--color-fill-1), var(--color-fill-1));
+        }
+    </style>
+    <style>
+        body {
+            --home-color-bg-1: #fff;
+        }
+
+        .mve-teams-review {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .mve-teams-review-box {
+            padding: 0 32px;
+            margin: 8px;
+            width: calc(33.3% - 80px);
+            box-shadow: 0 0 3px rgb(78 89 105 / 14%);
+            border-radius: 8px;
+            background: var(--home-color-bg-1);
+            text-decoration: none;
+        }
+
+        .mve-teams-review-box:hover {
+            box-shadow: 0 0 5px rgb(78 89 105 / 24%);
+        }
+
+        .mve-teams-review-box-content {
+            padding-top: 32px;
+            padding-bottom: 32px;
+            color: var(--color-text-1);
+        }
+
+        .mve-teams-review-box-info {
+            padding: 12px 0;
+            text-align: center;
+            border-top: 1px solid var(--color-border);
+            color: var(--color-text-2);
+        }
+
+        .mve-teams-review-box-info span {
+            margin-left: 10px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="mve-container">
+        <header class="mve-header">
+            <h1>Minto.ViewHouse</h1><span></span>
+            <p>视图参照平台</p>
+        </header>
+        <main>
+            <section class="mve-wrapper">
+                <div class="mve-wrapper-cell mve-wrapper-cell-blue">
+                    <div class="mve-card-header">
+                        <div class="mve-card-header-left">
+                            <div class="mve-card-title">设计资源</div>
+                            <div class="mve-card-desc">使用基础设计资源，帮助你创造优秀的产品设计</div>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="mve-card-body">这里有包括全局色、文字、图标和布局的指南</div>
+                    <div class="mve-card-footer">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="mve-wrapper-cell mve-wrapper-cell-gray">
+                    <div class="mve-card-header">
+                        <div class="mve-card-header-left">
+                            <div class="mve-card-title">开发资源</div>
+                            <div class="mve-card-desc">组件用于更快速、更简便的 Web 开发</div>
+                        </div>
+                        <div></div>
+                    </div>
+                    <div class="mve-card-body">组件用于更快速、更简便的 web 开发。你也可以建立你自己的设计系统</div>
+                    <div class="mve-card-footer">
+                        <p></p>
+                    </div>
+                </div>
+            </section>
+            <section class="mve-content">
+                <div class="mve-content-header">
+                    <div class="mve-content-header-left">
+                        <div class="mve-content-header-name">
+                            可视化视图最佳实践
+                        </div>
+                        <div class="mve-content-header-title">视觉效果的实现参考</div>
+                    </div>
+                </div>
+                <div class="mve-content-body">
+
+                    <div class="mve-teams-review">
+                        <a class="mve-teams-review-box" href="./preview/echarts.html">
+                            <div class="mve-teams-review-box-content">水球图</div>
+                            <div class="mve-teams-review-box-info">
+                                水球图<span>@Juvos</span>
+                            </div>
+                        </a>
+                        <a class="mve-teams-review-box">
+                            <div class="mve-teams-review-box-content">仪表盘</div>
+                            <div class="mve-teams-review-box-info">
+                                仪表盘<span>@Juvos</span>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+        </main>
+    </section>
+</body>
+
 </html>

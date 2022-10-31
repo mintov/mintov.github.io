@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Echart Demo</title>
+    <link href="./../assets/css/mve.css" rel="stylesheet">
+    <style>
+        .echart-flex {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        .echart-cell {
+            width: 400px;
+            height: 400px;
+            border: 1px dashed #ccc;
+            margin: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="echart-flex">
+        <!-- 水球图 -->
+        <div class="echart-cell" id="total"></div>
+        <!-- 仪表盘 -->
+        <div class="echart-cell" id="average"></div>
+    </section>
+</body>
+<script type="text/javascript" src="./../assets/js/mve.js"></script>
+<script type="text/javascript" src="./../assets/js/echarts/echarts.js"></script>
+<script type="text/javascript" src="./../assets/js/echarts/echarts-liquidfill.js"></script>
+
+<!-- 水位图、水球图 -->
+<script type="text/javascript">
+    waterChart('total', {
+        value: 0,
+        title: '绩效总分'
+    })
+
+    //水球图初始化
+    function waterChart(id, data) {
+        //数值大小
+        var max = 500; //满刻度大小
+        var arr = 0.6
+        var charData = max * arr;
+        option = {
+            tooltip: {
+                show: true
+            },
+            series: [{
+                type: 'liquidFill',
+                data: [0.8, 0.8],
+                radius: '82%',
+                shape: 'circle',
+                center: ['50%', '50%'],
+                color: ['#d0ecfe', '#89d2fb'],
+                backgroundStyle: {
+                    borderColor: '#3399ff',
+                    borderWidth: 6,
+                    shadowColor: 'rgba(0, 0, 0, 0.1)',
+                    shadowBlur: 3
+                },
+                itemStyle: {
+                    opacity: 1,
+                    shadowBlur: 8,
+                    shadowColor: 'rgba(0, 0, 0, 0.2)'
+                },
+                label: {
+                    color: '#3399ff',
+                    insideColor: '#fff',
+                    fontSize: 38,
+                    formatter: `${data.value}\n{a|${data.title}}`,
+                    rich: {
+                        a: {
+                            color: '#fff',
+                            fontSize: 14,
+                            height: 30,
+                            padding: [-30, 0, 10, 0]
+                        }
+                    }
+                },
+                tooltip: {
+                    show: false
+                },
+                outline: {
+                    show: false
+                },
+                //关闭动画
+                waveAnimation: true,
+            }]
+        }
+
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById(id))
+        myChart.setOption(option)
+        //监听页面变化重新渲染
+        window.onresize = function () {
+            myChart.resize()
+        }
+    }
+</script>
+
+<!-- 仪表盘渲染 -->
+<script type="text/javascript">
+
+    dashboardChart('average', {
+        value: 30,
+        unit: '分',
+        title: '部门平均分'
+    })
+    //仪表盘渲染
+    function dashboardChart(id, data) {
+        var option = {
+            series: [{
+                type: 'pie',
+                radius: '40%',
+                itemStyle: {
+                    borderWidth: 0,
+                    shadowBlur: 20,
+                    shadowColor: 'rgba(51,153,255,0.3)'
+                },
+                data: [{
+                    value: 10,
+                    itemStyle: {
+                        color: '#f3f9ff',
+                    }
+                }],
+                z: '-1'
+            },
+            {
+                "type": "gauge",
+                "axisLine": {
+                    "lineStyle": {
+                        "color": [
+                            [Number(data.value) / 100, "#3399ff"],
+                            [1, "#dbecf8"]
+                        ],
+                        "width": 15
+                    }
+                },
+                "axisTick": {
+                    show: false
+                },
+                "axisLabel": {
+                    show: false
+                },
+                "splitLine": {
+                    "show": false
+                },
+                "itemStyle": {
+                    "normal": {
+                        "color": "#494f50"
+                    }
+                },
+                "detail": {
+                    "formatter": `{value}{a|${data.unit}}`,
+                    "offsetCenter": [0, 5],
+                    "textStyle": {
+                        "fontSize": 20,
+                        "color": "#000"
+                    },
+                    rich: {
+                        a: {
+                            color: '#999',
+                            fontSize: 14,
+                            height: 30,
+                            padding: [-3, -8, 0, 3]
+                        }
+                    }
+                },
+                "title": {
+                    "offsetCenter": [0, "100%"],
+                    color: '#999'
+                },
+                pointer: {
+                    show: false
+                },
+                "data": [{
+                    "value": data.value,
+                    name: data.title
+                }]
+            }
+            ]
+        };
+
+        //初始化echarts实例
+        var myChart = echarts.init(document.getElementById(id))
+        myChart.setOption(option)
+        //监听页面变化重新渲染
+        window.onresize = function () {
+            myChart.resize()
+        }
+    }
+</script>
+
+</html>
