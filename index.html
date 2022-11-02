@@ -180,6 +180,8 @@
             border-radius: 8px;
             background: var(--home-color-bg-1);
             text-decoration: none;
+            display: flex;
+            flex-direction: column;
         }
 
         .mve-teams-review-box:hover {
@@ -188,8 +190,16 @@
 
         .mve-teams-review-box-content {
             padding-top: 32px;
-            padding-bottom: 32px;
+            padding-bottom: 24px;
             color: var(--color-text-1);
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mve-teams-review-box-content img {
+            width: 100%;
         }
 
         .mve-teams-review-box-info {
@@ -251,7 +261,6 @@
                     </div>
                 </div>
                 <div class="mve-content-body">
-
                     <div class="mve-teams-review">
                         <a class="mve-teams-review-box" href="./preview/echarts.html">
                             <div class="mve-teams-review-box-content">水球图</div>
@@ -263,6 +272,41 @@
                             <div class="mve-teams-review-box-content">仪表盘</div>
                             <div class="mve-teams-review-box-info">
                                 仪表盘<span>@Juvos</span>
+                            </div>
+                        </a>
+                        <a class="mve-teams-review-box" href="./preview/codeViewDemo.html">
+                            <div class="mve-teams-review-box-content">
+                                <img src="./assets/images/preview/codeViewDemo.png" />
+                            </div>
+                            <div class="mve-teams-review-box-info">
+                                在线代码编辑器<span>@Juvos</span>
+                            </div>
+                        </a>
+
+                        <a class="mve-teams-review-box" href="./preview/baseView.html">
+                            <div class="mve-teams-review-box-content">
+                                <img src="./assets/images/preview/baseViewDemo.png" />
+                            </div>
+                            <div class="mve-teams-review-box-info">
+                                静态演示页面<span>@Juvos</span>
+                            </div>
+                        </a>
+
+                        <a class="mve-teams-review-box" href="./preview/viewui.html">
+                            <div class="mve-teams-review-box-content">
+                                ViewUI
+                            </div>
+                            <div class="mve-teams-review-box-info">
+                                ViewUI<span>@Juvos</span>
+                            </div>
+                        </a>
+
+                        <a class="mve-teams-review-box" href="./preview/viewuiDemo.html">
+                            <div class="mve-teams-review-box-content">
+                                ViewUI示例页面
+                            </div>
+                            <div class="mve-teams-review-box-info">
+                                ViewUI示例页面<span>@Juvos</span>
                             </div>
                         </a>
 

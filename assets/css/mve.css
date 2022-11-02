@@ -1,3 +1,8 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
 body {
   --red-1: 255, 236, 232;
   --red-2: 253, 205, 197;

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+
+</style>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ViewUI示例-Minto.ViewHouse</title>
+    <link href="./../assets/css/mve.css" rel="stylesheet">
+    <link href="./../assets/viewui/styles/iview.css" rel="stylesheet" />
+    <style>
+        .mve-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 32px 48px;
+            margin: 0 auto;
+        }
+
+        .mve-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 24px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .mve-header h1 {
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .mve-header span {
+            display: inline-block;
+            height: 24px;
+            width: 2px;
+            background: #efefef;
+            margin: 0 16px;
+        }
+    </style>
+    <style>
+        .mve-base {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .mve-base-left {
+            flex: 1;
+            border: 1px solid #efefef;
+            min-height: 300px;
+        }
+
+        .mve-base-right {
+            margin-left: 24px;
+            width: 300px;
+            border: 1px solid #efefef;
+        }
+
+        .mve-base-card {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 28px 48px;
+            background-color: var(--color-neutral-2);
+            border-radius: 4px;
+            color: var(--color-text-2);
+            margin-bottom: 24px;
+        }
+    </style>
+    <style>
+        .mve-tools {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+        }
+
+        .mve-tools-cell {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            text-align: center;
+            border-radius: var(--border-radius-circle);
+            margin-left: 8px;
+            background-color: var(--color-bg-4);
+            border: 1px solid var(--color-fill-3);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mve-tools-cell:hover {
+            background-color: var(--color-secondary-hover);
+            color: rgb(var(--primary-6));
+            border-color: rgb(var(--primary-6));
+        }
+
+        .mve-icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            color: rgb(var(--primary-6));
+            font-style: normal;
+            vertical-align: -2px;
+            outline: none;
+            stroke: currentColor;
+        }
+    </style>
+    <style>
+        .echart-cell {
+            width: 400px;
+            height: 400px;
+            border: 1px dashed #ccc;
+            margin: 8px;
+        }
+    </style>
+    <style>
+        *,
+        :after,
+        :before {
+            box-sizing: border-box;
+        }
+
+        .mve-base-card .hljs {
+            color: #525252;
+            -webkit-text-size-adjust: none;
+        }
+
+        .hljs-comment {
+            color: #b3b3b3;
+        }
+
+        .hljs-tag {
+            color: #3e76f6;
+        }
+
+        .hljs-attr,
+        .hljs-attribute {
+            color: #e96900;
+        }
+
+        .hljs-string {
+            color: #42b983;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="mve-container">
+        <header>
+            <a class="mve-header" href="./../index.html">
+                <h1>Minto.ViewHouse</h1><span></span>
+                <p>ViewUI</p>
+            </a>
+        </header>
+        <main id="minto">
+            <code-layout info noeditor v-model="codeValue" @on-change="changeCode($event)"
+                @refresh="refreshView($event)">
+                <div>
+                    <i-button @click="show">Click me!</i-button>
+                    <Modal v-model="visible" title="Welcome">Welcome to ViewUI</Modal>
+                </div>
+                <template slot="right">
+                    <div>操作</div>
+                </template>
+                <template slot="info">
+                    <div class="mve-base-card">
+                        <code class="html hljs xml">
+                            <span class="hljs-comment">&lt;!-- import Vue.js
+                                --&gt;</span><br>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span
+                                    class="hljs-attr">src</span>=<span
+                                    class="hljs-string">"//unpkg.com/vue@2.6.14/dist/vue.min.js"</span>&gt;</span><span
+                                class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br>
+                            <span class="hljs-comment">&lt;!-- import stylesheet --&gt;</span><br>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span
+                                    class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span
+                                    class="hljs-attr">href</span>=<span
+                                    class="hljs-string">"//unpkg.com/view-design/dist/styles/iview.css"</span>&gt;</span><br>
+                            <span class="hljs-comment">&lt;!-- import iView --&gt;</span><br>
+                            <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span
+                                    class="hljs-attr">src</span>=<span
+                                    class="hljs-string">"//unpkg.com/view-design/dist/iview.min.js"</span>&gt;</span><span
+                                class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+                        </code>
+                    </div>
+                </template>
+                <template slot="editor">
+                    <code-editor style="height: 360px" ref="editors" :content="codeValue" theme="monokai" lang="html"
+                        @change="editorChange"></code-editor>
+                </template>
+            </code-layout>
+        </main>
+    </section>
+</body>
+<script type="text/javascript" src="./../assets/js/vue.min.js"></script>
+<script type="text/javascript" src="./../assets/viewui/iview.js"></script>
+<script type="text/javascript" src="./../assets/js/code.html.min.js"></script>
+<script type="text/javascript" src="./../assets/js/viewui.js"></script>
+<script type="text/javascript">
+
+    const codeTemp = ViewUIStr;
+    new Vue({
+        el: "#minto",
+        components: {
+        },
+        data() {
+            return {
+                codeValue: "",
+                visible: false
+            };
+        },
+        mounted() {
+            let temp = codeTemp;
+            // temp = temp.replaceAll("\"", "&quot;");
+            // temp = temp.replaceAll("<", "&lt;"); temp = temp.replaceAll(">", "&gt;");
+            // temp = temp.replaceAll("'", "&apos;");
+            // temp = temp.replaceAll(" ", "&ensp;");
+            // temp = temp.replaceAll("\\n", "&#10;");
+            // temp = temp.replaceAll("\\r", "&#13;");
+            this.codeValue = temp;
+        },
+        methods: {
+            changeCode(val) {
+
+                // console.log("changeCode ->", val)
+            },
+            refreshView(val) {
+            },
+            show: function () {
+                this.visible = true;
+            },
+            editorChange() { }
+        },
+    });
+
+</script>
+
+</html>
