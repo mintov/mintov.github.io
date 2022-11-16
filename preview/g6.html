@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+
+</style>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>G6示例-Minto.ViewHouse</title>
+    <link href="./../assets/css/mve.css" rel="stylesheet">
+    <link href="./../assets/viewui/styles/iview.css" rel="stylesheet" />
+    <style>
+        .mve-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: 32px 48px;
+            margin: 0 auto;
+        }
+
+        .mve-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 24px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .mve-header h1 {
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        .mve-header span {
+            display: inline-block;
+            height: 24px;
+            width: 2px;
+            background: #efefef;
+            margin: 0 16px;
+        }
+    </style>
+    <style>
+        .mve-base {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .mve-base-left {
+            flex: 1;
+            border: 1px solid #efefef;
+            min-height: 300px;
+        }
+
+        .mve-base-right {
+            margin-left: 24px;
+            width: 300px;
+            border: 1px solid #efefef;
+        }
+
+        .mve-base-card {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 28px 48px;
+            background-color: var(--color-neutral-2);
+            border-radius: 4px;
+            color: var(--color-text-2);
+            margin-bottom: 24px;
+        }
+    </style>
+    <style>
+        .mve-tools {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            margin-bottom: 16px;
+        }
+
+        .mve-tools-cell {
+            width: 28px;
+            height: 28px;
+            padding: 0;
+            text-align: center;
+            border-radius: var(--border-radius-circle);
+            margin-left: 8px;
+            background-color: var(--color-bg-4);
+            border: 1px solid var(--color-fill-3);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mve-tools-cell:hover {
+            background-color: var(--color-secondary-hover);
+            color: rgb(var(--primary-6));
+            border-color: rgb(var(--primary-6));
+        }
+
+        .mve-icon {
+            display: inline-block;
+            width: 1em;
+            height: 1em;
+            color: rgb(var(--primary-6));
+            font-style: normal;
+            vertical-align: -2px;
+            outline: none;
+            stroke: currentColor;
+        }
+    </style>
+    <style>
+        .tag-node {
+            background-color: #df8144;
+            border-radius: 16px 0 16px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tag-node span {
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .tag-cell-triggle {
+            position: relative;
+        }
+
+        .tag-cell-triggle svg {
+            width: 100%;
+            height: 100%;
+
+        }
+
+        .tag-cell-triggle-pane {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 78%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .tag-cell-triggle span {
+            color: #fff;
+        }
+
+        .business-node {
+            background: #488ee9;
+            border-radius: 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .business-node span {
+            display: inline-block;
+            margin-bottom: 4px;
+            color: #fff;
+            margin-top: 2px;
+        }
+
+        .business-node label {
+            font-weight: 500;
+            margin-right: 4px;
+        }
+
+        .business-node-head {
+            flex: 1;
+            position: relative;
+        }
+
+        .business-node-head-pic {
+            height: 60px;
+            width: 60px;
+            border-radius: 60px;
+            border: 1px solid #4e9df1;
+            overflow: hidden;
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .basic-node {
+            border-radius: 2px;
+            background: #488ee9;
+            border: 1px solid #df8144;
+            padding: 2px 4px;
+        }
+
+        .basic-node span {
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .basic-node-second {
+            border-radius: 2px;
+            background: #d4dffc;
+            border: 1px solid #df8144;
+            padding: 2px 2px;
+        }
+
+        .basic-node-second span {
+            color: #333;
+        }
+    </style>
+
+</head>
+
+<body>
+    <section class="mve-container">
+        <header>
+            <a class="mve-header" href="./../index.html">
+                <h1>Minto.ViewHouse</h1><span></span>
+                <p>ViewUI</p>
+            </a>
+        </header>
+        <main id="minto">
+            <code-layout info noeditor v-model="codeValue" @on-change="changeCode($event)"
+                @refresh="refreshView($event)">
+                <div>
+                    <!-- 图的画布容器 -->
+                    <div id="mountNode"></div>
+                </div>
+                <template slot="right">
+                    <div>操作</div>
+                </template>
+
+            </code-layout>
+        </main>
+    </section>
+</body>
+<script type="text/javascript" src="./../assets/js/vue.min.js"></script>
+<script type="text/javascript" src="./../assets/viewui/iview.js"></script>
+<script type="text/javascript" src="./../assets/js/code.html.min.js"></script>
+<script type="text/javascript" src="./../assets/js/data/g6.js"></script>
+<!-- 引入 G6 -->
+<script src="https://gw.alipayobjects.com/os/lib/antv/g6/4.3.11/dist/g6.min.js"></script>
+<script type="text/javascript">
+
+    const codeTemp = ViewUIStr;
+    new Vue({
+        el: "#minto",
+        components: {
+        },
+        data() {
+            return {
+                codeValue: "",
+                visible: false
+            };
+        },
+        mounted() {
+            let temp = codeTemp;
+            this.codeValue = temp;
+        },
+        methods: {
+            changeCode(val) {
+            },
+            refreshView(val) {
+            },
+            show: function () {
+                this.visible = true;
+            },
+            editorChange() { }
+        },
+    });
+
+</script>
+
+<script>
+    G6.registerNode('business-node', {
+        draw: (cfg, group) => {
+            const shape = group.addShape('dom', {
+                attrs: {
+                    width: cfg.size[0],
+                    height: cfg.size[1],
+                    html: `
+                    <div style="width: ${cfg.size[0]}px;height: ${cfg.size[1] - 4}px;display:flex;flex-direction: column;justify-content: center;">
+                        <div id=${cfg.id} class='business-node'
+                        style="width: ${cfg.size[0]}px;height: 60px;">
+                        <div class="business-node-head">
+                            <div class="business-node-head-pic">
+                                <img style="height: 60px;" src="./../assets/images/preview/baseViewDemo.png"/>
+                                </div>
+                            </div>
+                        <span><label>${cfg.label}</label>${cfg.label}</span>
+                        </div></div>`,
+                },
+                draggable: true,
+            });
+            return shape;
+        },
+    });
+
+    G6.registerNode('basic-node', {
+        draw: (cfg, group) => {
+            const shape = group.addShape('dom', {
+                attrs: {
+                    width: cfg.size[0],
+                    height: cfg.size[1],
+                    html: `
+                        <div id=${cfg.id} class='basic-node'>
+                        <span>${cfg.label}</span>
+                        </div>`,
+                },
+                draggable: true,
+            });
+            return shape;
+        },
+    });
+
+    G6.registerNode('basic-node-second', {
+        draw: (cfg, group) => {
+            const shape = group.addShape('dom', {
+                attrs: {
+                    width: cfg.size[0],
+                    height: cfg.size[1],
+                    html: `
+                        <div id=${cfg.id} class='basic-node-second'>
+                        <span>${cfg.label}</span>
+                        </div>`,
+                },
+                draggable: true,
+            });
+            return shape;
+        },
+    });
+    G6.registerNode('tag-node', {
+        draw: (cfg, group) => {
+            const shape = group.addShape('dom', {
+                attrs: {
+                    width: cfg.size[0],
+                    height: cfg.size[1],
+                    html: `
+                        <div id=${cfg.id} class='tag-node'
+                        style="width: ${cfg.size[0]}px;height: ${cfg.size[1] - 4}px;">
+                        <span>${cfg.label}</span>
+                        </div>`,
+                },
+                draggable: true,
+            });
+            return shape;
+        },
+    });
+    G6.registerNode('tag-cell-triggle', {
+        draw: (cfg, group) => {
+            const shape = group.addShape('dom', {
+                attrs: {
+                    width: cfg.size[0],
+                    height: cfg.size[1],
+                    html: `
+                        <div id=${cfg.id} class='tag-cell-triggle'
+                            style="width: ${cfg.size[0]}px;height: ${cfg.size[1]}px;">
+                            <div class="tag-cell-triggle-pane">
+                                <span>${cfg.label}</span>
+                            </div>
+                            <svg width="120" height="40" viewBox="0 0 120 40">
+                                <g><path d="M0,0L0,40L60,40L90,40L120,20L90,0L60,0L0,0Z" fill="#278FF0" fill-opacity="1"/><path d="M1,0L90,0L119.099,19.3991L120,20L119.099,20.6009L90,40L0,40L0,0L1,0ZM1,1L1,39L89.6972,39L118.197,20L89.6972,1L1,1Z" fill-rule="evenodd" fill="#EE7C31" fill-opacity="1"/></g>
+                            </svg>
+                        </div>
+                        `,
+                },
+                draggable: true,
+            });
+            return shape;
+        },
+    });
+
+
+    G6.registerEdge(
+        'line-arrow',
+        {
+            getPath(points) {
+                const startPoint = points[0];
+                const endPoint = points[1];
+                return [
+                    ['M', startPoint.x, startPoint.y],
+                    ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, startPoint.y],
+                    ['L', endPoint.x / 3 + (2 / 3) * startPoint.x, endPoint.y],
+                    ['L', endPoint.x, endPoint.y],
+                ];
+            },
+            getShapeStyle(cfg, group) {
+
+                const source = cfg.source;
+                const startPoint = cfg.startPoint;
+                const endPoint = cfg.endPoint;
+                const controlPoints = this.getControlPoints(cfg);
+                let points = [startPoint]; // the start point
+                // the control points
+                if (controlPoints) {
+                    points = points.concat(controlPoints);
+                }
+                // the end point
+                points.push(endPoint);
+                let path = [];
+                console.log("path ->")
+                if (source.indexOf("Root") > -1) {
+                    path = [
+                        ['M', startPoint.x, startPoint.y],
+                        ['L', startPoint.x, endPoint.y],
+                        ['L', endPoint.x, endPoint.y],
+                    ]
+                } else if (source.indexOf("key-n") > -1) {
+                    console.log("points key =>", source)
+                    const sPoint = points[0];
+                    const ePoint = points[1];
+                    path = [
+                        ['M', sPoint.x, sPoint.y],
+                        ['L', ePoint.x / 3 + sPoint.x, sPoint.y],
+                        ['L', ePoint.x / 3 + sPoint.x, ePoint.y],
+                        ['L', ePoint.x, ePoint.y],
+                    ];
+                } else {
+                    path = this.getPath(points);
+                }
+                const style = Object.assign(
+                    {},
+                    G6.Global.defaultEdge.style,
+                    {
+                        stroke: '#BBB',
+                        lineWidth: 1,
+                        path,
+                    },
+                    cfg.style,
+                    {
+                        labelCfg: {
+                            refY: 20,
+                        },
+                    }
+                );
+                return style;
+            },
+        },
+        'line',
+    );
+
+
+    const mdata = {
+        isRoot: true,
+        id: 'Root',
+        "title": "销售员",
+        type: "business-node",
+        size: [120, 120],
+        "children": [
+            {
+                "title": "目标指标",
+                label: "业务表",
+                type: "tag-node",
+                size: [100, 40],
+
+                "children": [
+                    {
+                        id: "key-n1",
+                        "title": "销售额达到300万",
+                        type: "basic-node",
+                        size: [140, 40],
+                        label: "业务表",
+                        "children": [
+                            { "title": "销售合同表", type: "basic-node-second", size: [80, 40], },
+                            { "title": "项目信息表", type: "basic-node-second", size: [80, 40], },
+                        ]
+                    },
+                    {
+                        id: "key-n2",
+                        "title": "拜访300个客户",
+                        type: "basic-node",
+                        size: [140, 40],
+                        label: "业务表",
+                        "children": [
+                            { "title": "客户拜访表", type: "basic-node-second", size: [80, 40], },
+                            { "title": "需求记录表", type: "basic-node-second", size: [80, 40], },
+                        ]
+                    },
+                    {
+                        id: "key-n3",
+                        "title": "拜访伙伴20人",
+                        type: "basic-node",
+                        size: [140, 40],
+                        label: "业务表",
+                        "children": [
+                            { "title": "伙伴拜访表", type: "basic-node-second", size: [80, 40], },
+                        ]
+                    }
+                ]
+            },
+            {
+                "title": "能力标签",
+                label: "业务表",
+                type: "tag-node",
+                size: [100, 40],
+                "children": [
+                    { "title": "学习能力", type: "tag-cell-triggle", size: [100, 40], },
+                    { "title": "沟通能力", type: "tag-cell-triggle", size: [100, 40], },
+                    { "title": "应变能力", type: "tag-cell-triggle", size: [100, 40], },
+                    { "title": "渠道资源", type: "tag-cell-triggle", size: [100, 40], },
+                ]
+            },
+        ]
+    };
+    // let aArr = [
+    //     { "title": "学习能力", type: "tag-cell-triggle", size: [100, 40], },
+    //     { "title": "沟通能力", type: "tag-cell-triggle", size: [100, 40], },
+    //     { "title": "应变能力", type: "tag-cell-triggle", size: [100, 40], },
+    //     { "title": "渠道资源", type: "tag-cell-triggle", size: [100, 40], },
+    // ]
+    // let bArr = [
+    //     { "title": "能力标签", label: "业务表", type: "tag-node", size: [100, 40], },
+    // ]
+    // let cArr = [
+    //     { isRoot: true, id: 'Root', "title": "销售员", type: "business-node", size: [120, 120], }
+    // ]
+    // let dArr = [
+    //     { "title": "目标指标", label: "业务表", type: "tag-node", size: [100, 40], }
+    // ]
+    // let eArr = [
+    //     { id: "key-n1", "title": "销售额达到300万", type: "basic-node", size: [140, 40], label: "业务表",
+    //                     "children": [
+    //                         { "title": "销售合同表", type: "basic-node-second", size: [80, 40], },
+    //                         { "title": "项目信息表", type: "basic-node-second", size: [80, 40], },
+    //                     ]
+    //                 },
+    //                 {
+    //                     id: "key-n2",
+    //                     "title": "拜访300个客户",
+    //                     type: "basic-node",
+    //                     size: [140, 40],
+    //                     label: "业务表",
+    //                     "children": [
+    //                         { "title": "客户拜访表", type: "basic-node-second", size: [80, 40], },
+    //                         { "title": "需求记录表", type: "basic-node-second", size: [80, 40], },
+    //                     ]
+    //                 },
+    //                 {
+    //                     id: "key-n3",
+    //                     "title": "拜访伙伴20人",
+    //                     type: "basic-node",
+    //                     size: [140, 40],
+    //                     label: "业务表",
+    //                     "children": [
+    //                         { "title": "伙伴拜访表", type: "basic-node-second", size: [80, 40], },
+    //                     ]
+    //                 }
+    // ]
+
+
+    let baseNodes = [];
+    let baseEdges = [];
+    const rightRootNode = mdata.children[0];
+    const leftRootNode = mdata.children[1];
+
+    const data = {
+        nodes: [
+            {
+                isRoot: true,
+                id: 'Root',
+                "title": "销售员",
+                label: "销售员",
+                type: "business-node",
+                size: [120, 120],
+                x: 0,
+                y: -40,
+                anchorPoints: [
+                    [0, 0.5],
+                    [1, 0.5],
+                ],
+            },
+            {
+                id: "m1",
+                "title": "目标指标",
+                label: "目标指标",
+                type: "tag-node",
+                size: [100, 40],
+                x: 180,
+                y: 0,
+                anchorPoints: [
+                    [0, 0.5],
+                    [1, 0.5],
+                ],
+            },
+            {
+                id: "n1",
+                label: "销售额达到300万",
+                type: "basic-node",
+                size: [140, 40],
+                x: 380,
+                y: -120,
+                anchorPoints: [
+                    [0, 0.5],
+                    [1, 0.5],
+                ],
+            },
+            { id: "n11", "label": "销售合同表", type: "basic-node-second", size: [80, 40], x: 620, y: -140, },
+            { id: "n12", "label": "项目信息表", type: "basic-node-second", size: [80, 40], x: 620, y: -100, },
+            {
+                id: "n2",
+                label: "拜访300个客户",
+                type: "basic-node",
+                size: [140, 40],
+                x: 380,
+                y: 0,
+                anchorPoints: [
+                    [0, 0.5],
+                    [1, 0.5],
+                ],
+            },
+            { "label": "客户拜访表", type: "basic-node-second", size: [80, 40], x: 620, y: 20, },
+            { "label": "需求记录表", type: "basic-node-second", size: [80, 40], x: 620, y: -20, },
+            {
+                label: "拜访伙伴20人",
+                type: "basic-node",
+                size: [140, 40],
+                x: 380,
+                y: 120,
+                anchorPoints: [
+                    [0, 0.5],
+                    [1, 0.5],
+                ],
+            },
+            { "label": "伙伴拜访表", type: "basic-node-second", size: [80, 40], x: 620, y: 120, },
+            {
+                id: "m2",
+                "title": "能力标签",
+                label: "能力标签",
+                type: "tag-node",
+                size: [100, 40],
+                x: -180,
+                y: 0,
+                anchorPoints: [
+                    [0, 0.5],
+                    [1, 0.5],
+                ],
+            },
+            { "label": "学习能力", type: "tag-cell-triggle", size: [100, 40], x: -340, y: -90, },
+            { "label": "沟通能力", type: "tag-cell-triggle", size: [100, 40], x: -340, y: -30, },
+            { "label": "应变能力", type: "tag-cell-triggle", size: [100, 40], x: -340, y: 30, },
+            { "label": "渠道资源", type: "tag-cell-triggle", size: [100, 40], x: -340, y: 90, },
+            {
+                x: 300,
+                y: 100,
+                label: 'Break the line if it is too long',
+                id: 'node2',
+                labelCfg: {
+                    position: 'bottom',
+                },
+                anchorPoints: [
+                    [0, 0.5],
+                    [1, 0.5],
+                ],
+            },
+        ],
+        edges: [
+            {
+                source: 'Root',
+                target: 'node2',
+                label: 'Break the line if it is too long',
+                labelCfg: {
+                    refY: 20,
+                },
+                style: {
+                    endArrow: true,
+                },
+            },
+        ],
+    };
+    const container = document.getElementById('mountNode');
+    const width = container.scrollWidth;
+    const height = container.scrollHeight || 500;
+
+
+    const graph = new G6.Graph({
+        container: 'mountNode',
+        width,
+        height,
+        fitCenter: true,
+        renderer: 'svg',
+        defaultEdge: {
+            type: 'line-arrow',
+            style: {
+                stroke: "#df8144"
+            },
+            labelCfg: {
+                refY: 20,
+                position: "middle"
+            },
+            sourceAnchor: 0.5,
+            targetAnchor: 0.5,
+        },
+        layout: {
+            type: 'mindmap',
+            direction: 'H',
+            getHeight: () => {
+                return 40;
+            },
+            getWidth: () => {
+                return 180;
+            },
+            getVGap: () => {
+                return 10;
+            },
+            getHGap: () => {
+                return 20;
+            },
+        },
+    });
+
+    graph.data(data);
+    graph.render();
+    graph.fitView();
+
+    if (typeof window !== 'undefined')
+        window.onresize = () => {
+            if (!graph || graph.get('destroyed')) return;
+            if (!container || !container.scrollWidth || !container.scrollHeight) return;
+            graph.changeSize(container.scrollWidth, container.scrollHeight);
+        };
+
+</script>
+
+</html>
